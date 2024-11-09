@@ -10,6 +10,19 @@ store.getValueBusinessRules();
 </script>
 
 <template>
-  <Parcels />
-  <BusinessRules />
+  <div class="parcels-handling">
+    <div>
+      <Parcels />
+    </div>
+    <div>
+      <BusinessRules />
+    </div>
+  </div>
 </template>
+
+<style lang="scss" scoped>
+.parcels-handling {
+  display: flex;
+  gap: 64px;
+}
+</style>

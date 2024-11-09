@@ -36,7 +36,7 @@ const displayDate = computed(() => new Date(date.value).toLocaleDateString());
 </script>
 
 <template>
-  <div>{{ displayDate }}</div>
+  <h3>Shipping date: {{ displayDate }}</h3>
   <table>
     <thead>
       <th>Recipient</th>
@@ -65,13 +65,13 @@ const displayDate = computed(() => new Date(date.value).toLocaleDateString());
 <style lang="scss" scoped>
 table {
   table-layout: fixed;
-  width: 100%;
   border-collapse: collapse;
-  border: 1px solid black;
+  border: 1px solid #1e2143;
+  font-size: 14px;
 }
 th,
 td {
   padding: 8px 16px;
-  border: 1px solid black;
+  border: 1px solid #1e2143;
 }
 </style>
