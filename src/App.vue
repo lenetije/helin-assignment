@@ -1,19 +1,22 @@
 <script setup>
-import HelloWorld from './components/HelloWorld.vue'
-import TheWelcome from './components/TheWelcome.vue'
+import Parcels from './components/Parcels.vue';
+import { useParcelsHandlingStore } from './stores/ParcelsHandling';
+
+const store = useParcelsHandlingStore();
+store.getParcels();
+store.getWeightBusinessRules();
+store.getValueBusinessRules();
 </script>
 
 <template>
   <header>
     <img alt="Vue logo" class="logo" src="./assets/logo.svg" width="125" height="125" />
 
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-    </div>
+    <div class="wrapper"></div>
   </header>
 
   <main>
-    <TheWelcome />
+    <Parcels />
   </main>
 </template>
 
