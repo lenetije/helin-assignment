@@ -2,6 +2,7 @@ import { ref } from 'vue';
 import { defineStore } from 'pinia';
 import { XMLParser } from 'fast-xml-parser';
 import { defaultWeightBusinessRules, defaultValueBusinessRules } from './defaultBusinessRules';
+import { businessRulesTypes } from '@/utils/BusinessRulesTypes';
 
 export const useParcelsHandlingStore = defineStore('parcelsHandling', () => {
   // state
@@ -22,19 +23,19 @@ export const useParcelsHandlingStore = defineStore('parcelsHandling', () => {
       });
   };
   const getWeightBusinessRules = () => {
-    const storedBusinessRules = localStorage.getItem('weightBusinessRules');
+    const storedBusinessRules = localStorage.getItem(businessRulesTypes.byWeight);
     if (!storedBusinessRules) {
       weightBusinessRules.value = defaultWeightBusinessRules;
-      localStorage.setItem('weightBusinessRules', JSON.stringify(defaultWeightBusinessRules));
+      localStorage.setItem(businessRulesTypes.byWeight, JSON.stringify(defaultWeightBusinessRules));
     } else {
       weightBusinessRules.value = JSON.parse(storedBusinessRules);
     }
   };
   const getValueBusinessRules = () => {
-    const storedBusinessRules = localStorage.getItem('valueBusinessRules');
+    const storedBusinessRules = localStorage.getItem(businessRulesTypes.byValue);
     if (!storedBusinessRules) {
       valueBusinessRules.value = defaultValueBusinessRules;
-      localStorage.setItem('valueBusinessRules', JSON.stringify(defaultValueBusinessRules));
+      localStorage.setItem(businessRulesTypes.byValue, JSON.stringify(defaultValueBusinessRules));
     } else {
       valueBusinessRules.value = JSON.parse(storedBusinessRules);
     }
@@ -43,26 +44,46 @@ export const useParcelsHandlingStore = defineStore('parcelsHandling', () => {
   // actions
   const removeDepartment = (departmentName) => {
     const weightBusinessRuleToRemove = weightBusinessRules.value.findIndex(
-      (rule) => rule.department === departmentName,
+      (rule) => rule.department === departmentName.value,
     );
-    if (weightBusinessRuleToRemove) {
+    if (weightBusinessRuleToRemove !== -1) {
       weightBusinessRules.value = weightBusinessRules.value.toSpliced(
         weightBusinessRuleToRemove,
         1,
       );
-      localStorage.setItem('weightBusinessRules', JSON.stringify(weightBusinessRules.value));
+      localStorage.setItem(businessRulesTypes.byWeight, JSON.stringify(weightBusinessRules.value));
     } else {
       const valueBusinessRuleToRemove = valueBusinessRules.value.findIndex(
-        (rule) => rule.department === departmentName,
+        (rule) => rule.department === departmentName.value,
       );
       valueBusinessRules.value = valueBusinessRules.value.toSpliced(valueBusinessRuleToRemove, 1);
-      localStorage.setItem('valueBusinessRules', JSON.stringify(valueBusinessRules.value));
+      localStorage.setItem(businessRulesTypes.byValue, JSON.stringify(valueBusinessRules.value));
+    }
+  };
+
+  const addBusinessRule = (businessRule, type, precedence) => {
+    if (type.value === businessRulesTypes.byWeight) {
+      if (precedence) {
+        weightBusinessRules.value.unshift(businessRule);
+      } else {
+        weightBusinessRules.value.push(businessRule);
+      }
+      localStorage.setItem(businessRulesTypes.byWeight, JSON.stringify(weightBusinessRules.value));
+    } else if (type.value === businessRulesTypes.byValue) {
+      if (precedence) {
+        valueBusinessRules.value.unshift(businessRule);
+      } else {
+        valueBusinessRules.value.push(businessRule);
+      }
+      localStorage.setItem(businessRulesTypes.byValue, JSON.stringify(valueBusinessRules.value));
+    } else {
+      throw new Error('no type of business rule recognized');
     }
   };
 
   const cleanLocalStorage = () => {
-    localStorage.removeItem('weightBusinessRules');
-    localStorage.removeItem('valueBusinessRules');
+    localStorage.removeItem(businessRulesTypes.byWeight);
+    localStorage.removeItem(businessRulesTypes.byValue);
   };
 
   return {
@@ -70,6 +91,7 @@ export const useParcelsHandlingStore = defineStore('parcelsHandling', () => {
     parcels,
     valueBusinessRules,
     weightBusinessRules,
+    addBusinessRule,
     cleanLocalStorage,
     getParcels,
     getValueBusinessRules,

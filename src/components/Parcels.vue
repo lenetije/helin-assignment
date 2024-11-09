@@ -29,6 +29,9 @@ const parcelsWithDepartments = computed(() => {
   });
 });
 
+const addressFirstLine = (address) => `${address.Street} ${address.HouseNumber}`;
+const addressSecondLine = (address) => `${address.PostalCode} ${address.City}`;
+
 const displayDate = computed(() => new Date(date.value).toLocaleDateString());
 </script>
 
@@ -37,14 +40,23 @@ const displayDate = computed(() => new Date(date.value).toLocaleDateString());
   <table>
     <thead>
       <th>Recipient</th>
-      <th>First step</th>
-      <th>Second step</th>
+      <th>Address</th>
+      <th>Value check</th>
+      <th>Handling</th>
     </thead>
     <tbody>
       <tr v-for="parcel in parcelsWithDepartments">
         <td>{{ parcel.Receipient.Name }}</td>
-        <td>{{ parcel.valueDepartment }}</td>
-        <td>{{ parcel.handlingDepartment }}</td>
+        <td>
+          <div>
+            {{ addressFirstLine(parcel.Receipient.Address) }}
+          </div>
+          <div>
+            {{ addressSecondLine(parcel.Receipient.Address) }}
+          </div>
+        </td>
+        <td>{{ parcel.valueDepartment || 'No applicable department' }}</td>
+        <td>{{ parcel.handlingDepartment || 'No applicable department' }}</td>
       </tr>
     </tbody>
   </table>
