@@ -1,4 +1,5 @@
 <script setup>
+import BusinessRules from './components/BusinessRules.vue';
 import Parcels from './components/Parcels.vue';
 import { useParcelsHandlingStore } from './stores/ParcelsHandling';
 
@@ -10,4 +11,5 @@ store.getValueBusinessRules();
 
 <template>
   <Parcels />
+  <BusinessRules />
 </template>

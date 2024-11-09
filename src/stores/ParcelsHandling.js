@@ -40,13 +40,40 @@ export const useParcelsHandlingStore = defineStore('parcelsHandling', () => {
     }
   };
 
+  // actions
+  const removeDepartment = (departmentName) => {
+    const weightBusinessRuleToRemove = weightBusinessRules.value.findIndex(
+      (rule) => rule.department === departmentName,
+    );
+    if (weightBusinessRuleToRemove) {
+      weightBusinessRules.value = weightBusinessRules.value.toSpliced(
+        weightBusinessRuleToRemove,
+        1,
+      );
+      localStorage.setItem('weightBusinessRules', JSON.stringify(weightBusinessRules.value));
+    } else {
+      const valueBusinessRuleToRemove = valueBusinessRules.value.findIndex(
+        (rule) => rule.department === departmentName,
+      );
+      valueBusinessRules.value = valueBusinessRules.value.toSpliced(valueBusinessRuleToRemove, 1);
+      localStorage.setItem('valueBusinessRules', JSON.stringify(valueBusinessRules.value));
+    }
+  };
+
+  const cleanLocalStorage = () => {
+    localStorage.removeItem('weightBusinessRules');
+    localStorage.removeItem('valueBusinessRules');
+  };
+
   return {
     date,
     parcels,
     valueBusinessRules,
     weightBusinessRules,
+    cleanLocalStorage,
     getParcels,
     getValueBusinessRules,
     getWeightBusinessRules,
+    removeDepartment,
   };
 });
