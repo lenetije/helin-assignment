@@ -41,6 +41,7 @@ export const useParcelsHandlingStore = defineStore('parcelsHandling', () => {
   };
 
   return {
+    date,
     parcels,
     valueBusinessRules,
     weightBusinessRules,

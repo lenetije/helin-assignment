@@ -4,7 +4,7 @@ import { computed } from 'vue';
 import { useParcelsHandlingStore } from '../stores/ParcelsHandling';
 
 const store = useParcelsHandlingStore();
-const { weightBusinessRules, valueBusinessRules, parcels } = storeToRefs(store);
+const { weightBusinessRules, valueBusinessRules, parcels, date } = storeToRefs(store);
 
 const parcelsWithDepartments = computed(() => {
   return parcels.value.map((parcel) => {
@@ -28,8 +28,38 @@ const parcelsWithDepartments = computed(() => {
     return { ...parcel, handlingDepartment: handlingDeparment, valueDepartment: valueDepartment };
   });
 });
+
+const displayDate = computed(() => new Date(date.value).toLocaleDateString());
 </script>
 
 <template>
-  <div>{{ parcelsWithDepartments }}</div>
+  <div>{{ displayDate }}</div>
+  <table>
+    <thead>
+      <th>Recipient</th>
+      <th>First step</th>
+      <th>Second step</th>
+    </thead>
+    <tbody>
+      <tr v-for="parcel in parcelsWithDepartments">
+        <td>{{ parcel.Receipient.Name }}</td>
+        <td>{{ parcel.valueDepartment }}</td>
+        <td>{{ parcel.handlingDepartment }}</td>
+      </tr>
+    </tbody>
+  </table>
 </template>
+
+<style lang="scss" scoped>
+table {
+  table-layout: fixed;
+  width: 100%;
+  border-collapse: collapse;
+  border: 1px solid black;
+}
+th,
+td {
+  padding: 8px 16px;
+  border: 1px solid black;
+}
+</style>
