@@ -1,32 +1,51 @@
-# Technical assessment
+# Technical assessment Selene Porchi
 
-## Short description
-You work at a parcel delivery company and you are asked to design a system to automate the internal handling of parcels coming in. 
-The parcels are coming in at the distribution center and need to be handled by different departments based on their weight and value.
-Currently, management is making plans that could lead to the addition or removal of departments in the future.
+## Running the application
 
-## Features
+Run in the root folder of the repository:
 
-### Feature 1
-The current business rules are as follows:
-- Parcels with a weight up to 1 kg are handled by the "Mail" department.
-- Parcels with a weight up to 10 kg are handled by the "Regular" department.
-- Parcels with a weight over 10 kg are handled by the "Heavy" department.
+- npm install
+- npm run dev
+  The application will open at the indicated localhost port.
 
-### Feature 2
-Parcels with a value of over € 1000,- need to be signed off by the "Insurance" department, before being processed by the other departments.
+## Running unit tests
 
-## Exercise
-- Parse the XML file (Container_68465468.xml)
-- Build a working application using a language and frameworks of your choosing, unless otherwise agreed
-- Unit tests
-- Presentation (maybe some UI / Console app)
+Run in the root folder of the application:
 
-## Finishing in the assignment
-After completing the exercise, make sure to commit all code and send an email to martijn.handels@helindata.com. Make sure to finish it at least a full working day prior to the technical interview (if already scheduled). 
+- npm run test:unit
 
-## During the technical interview
-- Demonstrate the behavior of the code.
-- Show us how adding or removing a department would be done.
+## App characteristics
 
-For all other questions and/or remarks, please send an email to martijn.handels@helindata.com or call +31 880 185185
+### Tech stack
+
+I used the create-vue scaffolding tool (https://github.com/vuejs/create-vue).
+Technologies used include:
+
+- Vue
+- Vite
+- Vitest
+- Pinia
+- SCSS
+  I decided to stick with a relatively simple UI, so to avoid unneccessary complexity I did not use any components library nor vue-router.
+
+### Applying the business rules
+
+The assignment did not specify if the desired final data format was a list of parcels, each with the department(s) responsible for handling it, or a list of departments, each with the parcels it needs to handle. I chose the first option because it seemed more compatible with a real life scenario where each parcel is handled in succession (but I have no real life experience of a shipping facility, so there's some guesswork at play here).
+The core of the logic is in src/utils/AssignDepartmentsToParcel.js
+
+### Technical implementation
+
+I am a Frontend Developer, so the logic that handles the parcels all lives in the Vue app. In a large scale, real life application, this might be better suited to happen on the server.
+In order to easily show how to add and remove departments, I provided a simple UI for both actions. The app uses the browser localStorage to persist the data inserted by the user, in place of making API calls. To easily reload the hard-coded default departments, a 'Clean local storage' button is provided.
+
+### TODO list
+
+Here's a few additional features that would bring this project from a proof of concept closer to a real-life working application:
+
+- when adding a new business rule, checking possible incompatibility with existing business rules and consequently warning the user
+- adding the possibility to filter the table in the department columns
+- extensive error handling
+- accessibility (ARIA labels, etc)
+- breakpoints for different screen sizes / mobile version
+
+I am happy to discuss more about these and other possible improvements during the tech interview!

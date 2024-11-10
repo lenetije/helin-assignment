@@ -1,11 +1,11 @@
-import { describe, it, expect, beforeAll } from 'vitest';
+import { describe, it, expect } from 'vitest';
 import { ref } from 'vue';
 
-import { assignDepartmentsToParcel } from '../../utils/assignDepartmentsToParcel';
+import { assignDepartmentsToParcel } from '@/utils/AssignDepartmentsToParcel';
 import {
   defaultValueBusinessRules,
   defaultWeightBusinessRules,
-} from '@/stores/defaultBusinessRules';
+} from '@/stores/DefaultBusinessRules';
 
 describe('assignDepartmentToParcel', () => {
   const weightBusinessRules = ref(defaultWeightBusinessRules);

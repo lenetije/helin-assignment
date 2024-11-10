@@ -1,7 +1,7 @@
 <script setup>
 import BusinessRules from './components/BusinessRules.vue';
 import Parcels from './components/Parcels.vue';
-import { useParcelsHandlingStore } from './stores/ParcelsHandling';
+import { useParcelsHandlingStore } from './stores/ParcelsHandlingStore';
 
 const store = useParcelsHandlingStore();
 store.getParcels();

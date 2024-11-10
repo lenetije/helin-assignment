@@ -1,15 +1,15 @@
 <script setup>
 import { storeToRefs } from 'pinia';
 import { computed } from 'vue';
-import { useParcelsHandlingStore } from '../stores/ParcelsHandling';
-import { assignDepartmentsToParces } from '@/utils/assignDepartmentsToParcel';
+import { useParcelsHandlingStore } from '@/stores/ParcelsHandlingStore';
+import { assignDepartmentsToParcel } from '@/utils/AssignDepartmentsToParcel';
 
 const store = useParcelsHandlingStore();
 const { weightBusinessRules, valueBusinessRules, parcels, date } = storeToRefs(store);
 
 const parcelsWithDepartments = computed(() => {
   return parcels.value.map((parcel) => {
-    assignDepartmentsToParcel(parcel, weightBusinessRules, valueBusinessRules);
+    return assignDepartmentsToParcel(parcel, weightBusinessRules, valueBusinessRules);
   });
 });
 

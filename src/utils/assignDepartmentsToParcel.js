@@ -1,17 +1,16 @@
 export const assignDepartmentsToParcel = (parcel, weightBusinessRules, valueBusinessRules) => {
-  let handlingDeparment = null;
-  for (let rule of weightBusinessRules.value) {
-    if (parcel.Weight > rule.lowerLimit && (!rule.upperLimit || parcel.Weight <= rule.upperLimit)) {
-      handlingDeparment = rule.department;
-      break;
-    }
-  }
-  let valueDepartment = null;
-  for (let rule of valueBusinessRules.value) {
-    if (parcel.Value > rule.lowerLimit && (!rule.upperLimit || parcel.Value <= rule.upperLimit)) {
-      valueDepartment = rule.department;
-      break;
-    }
-  }
+  const handlingDeparment = assignDepartment(parcel.Weight, weightBusinessRules.value);
+  const valueDepartment = assignDepartment(parcel.Value, valueBusinessRules.value);
   return { ...parcel, handlingDepartment: handlingDeparment, valueDepartment: valueDepartment };
+};
+
+const assignDepartment = (parcelData, rules) => {
+  let department = null;
+  for (let rule of rules) {
+    if (parcelData > rule.lowerLimit && (!rule.upperLimit || parcelData <= rule.upperLimit)) {
+      department = rule.department;
+      break;
+    }
+  }
+  return department;
 };

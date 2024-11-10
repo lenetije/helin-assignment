@@ -1,7 +1,7 @@
 import { ref } from 'vue';
 import { defineStore } from 'pinia';
 import { XMLParser } from 'fast-xml-parser';
-import { defaultWeightBusinessRules, defaultValueBusinessRules } from './defaultBusinessRules';
+import { defaultWeightBusinessRules, defaultValueBusinessRules } from './DefaultBusinessRules';
 import { businessRulesTypes } from '@/utils/BusinessRulesTypes';
 
 export const useParcelsHandlingStore = defineStore('parcelsHandling', () => {

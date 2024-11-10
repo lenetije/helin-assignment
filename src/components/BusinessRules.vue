@@ -1,7 +1,7 @@
 <script setup>
 import { storeToRefs } from 'pinia';
 import { computed, reactive, ref } from 'vue';
-import { useParcelsHandlingStore } from '../stores/ParcelsHandling';
+import { useParcelsHandlingStore } from '@/stores/ParcelsHandlingStore';
 import { businessRulesTypes } from '@/utils/BusinessRulesTypes';
 
 const store = useParcelsHandlingStore();
